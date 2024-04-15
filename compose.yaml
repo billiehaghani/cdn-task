@@ -1,0 +1,35 @@
+version: "2.4"
+services:
+  mysql:
+    container_name: 'bm-mysql'
+    image: 'mysql:8.0'
+    environment:
+      - 'MYSQL_DATABASE=cdn'
+      - 'MYSQL_PASSWORD=secret'
+      - 'MYSQL_ROOT_PASSWORD=secret'
+      - 'MYSQL_USER=cdn'
+    ports:
+      - '3306:3306'
+
+  rabbitmq:
+    container_name: 'bm-rabbitmq'
+    image: 'rabbitmq:3-management'
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=secret'
+      - 'RABBITMQ_DEFAULT_USER=admin'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  localstack:
+    container_name: 'bm-localstack'
+    image: 'localstack/localstack'
+    ports:
+      - '4566:4566'
+    environment:
+      - 'DOCKER_HOST=unix:///var/run/docker.sock'
+      - 'SERVICES=cloudwatch,costexplorer'
+      - 'AWS_ACCESS_KEY_ID=dummy'
+      - 'AWS_SECRET_ACCESS_KEY=dummy'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'

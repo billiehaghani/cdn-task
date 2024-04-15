@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: BitMover CDN Task
+  datasource:
+    username: cdn
+    password: secret
+    url: jdbc:mysql://localhost:3306/cdn?createDatabaseIfNotExist=true&autoReconnect=true
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  mvc:
+    format:
+      date: dd/MM/yyyy
+
+logging:
+  pattern:
+    level: '%5p %mdc'
+
+cdn-task:
+  scheduler:
+    data-usage:
+      rate: PT15M
+      time-zone: Europe/Berlin
+    billing:
+      cron: 0 0 23 * * *
+      time-zone: Europe/Berlin
+  rabbitmq:
+    billing:
+      exchange-name: billing
+      routing-key: billing.cdn_usage
+    cap:
+      exchange-name: cap
+      routing-key: cap.cdn_usage

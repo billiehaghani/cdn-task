@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Hojjatallah Haghani" id="3">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="data_usage"/>
+            </not>
+        </preConditions>
+        <createTable tableName="data_usage">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="distribution_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Hojjatallah Haghani" id="2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="distribution_id_idx"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="distribution_id_idx" tableName="data_usage">
+            <column name="distribution_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

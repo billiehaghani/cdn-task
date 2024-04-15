@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/create-if-needed-cdn-setup-table.xml
+  - include:
+      file: db/changelog/create-if-needed-data-usage-table.xml
